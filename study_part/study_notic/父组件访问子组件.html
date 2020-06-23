@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <cpn></cpn>
+        <cpn></cpn>
+        <cpn ref="reference"></cpn>
+        <button @click="btnClick">typing</button>
+    </div>
+    <template id="cpn">
+        <div>
+            <h2>charslub</h2>
+        </div>
+    </template>
+    <script src="../vue/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello'
+            },
+            methods:{
+                btnClick (){
+                    // 使用$children拿到所有的子组件 使用较少
+                    console.log(this.$children);
+                    for(let foo of this.$children){
+                        console.log(foo.name);
+                        foo.showMessage();
+                    }
+                    // 使用$refs拿取子组件, 其更加方便一般使用此方式
+                    // 只要在上方组件中加上ref=“组件代号”则可以使用下方的方法
+                    // 来指定获取指定对象的属性或是直接获取指定对象
+                    console.log(this.$refs.reference.name);
+                }
+            },
+            components: {
+                cpn: {
+                    data() {
+                        return {
+                            name:"this is child"
+                        }
+                    },
+                    template: '#cpn',
+                    methods: {
+                        showMessage() {
+                            console.log('showmessage');
+                        }
+                    },
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

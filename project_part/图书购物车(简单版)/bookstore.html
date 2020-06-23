@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>BOOK</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="../vue/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<div v-if="books.length">
+				<table>
+					<thead>
+						<tr>
+							<th></th>
+							<th>名称</th>
+							<th>出版日期</th>
+							<th>价格</th>
+							<th>购买数量</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="(foo, index) in books">
+							<td>{{foo.id}}</td>
+							<td>{{foo.name}}</td>
+							<td>{{foo.data}}</td>
+							<!-- 过滤器用法 -->
+							<td>{{foo.price | showPrice}}</td>
+							<td>
+								<button @click="decrement(index)" v-bind:disabled="foo.count === 1">-</button>
+								{{foo.count}}
+								<button @click="increment(index)">+</button>
+							</td>
+							<td><button @click="remove(index)">删除</button></td>
+						</tr>
+					</tbody>
+				</table>
+				<h2>total:{{ totalPrice | showPrice }}</h2>
+			</div>
+			<h2 v-else>empty!</h2>
+		</div>
+		<script src="main.js"></script>
+	</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 父组件模板 -->
+    <div id="app">
+        <!--这里必须加上v-bind进行数据监听，否则会导致数据传递的失败，
+            movies、message会变成字符串而不是参数进行传递  -->
+        <!-- <cpn :cmovies="movies" :cmessage="message"></cpn> -->
+        <!-- 这里监听了子组件的事件 -->
+        <!-- 这里同样不可以使用驼峰命名法 -->
+        <!-- 这里不传递参数时默认传递的不是浏览器的事件对象
+            默认的是子组件中传递出来的对象 -->
+        <cpn @btn="cpn"></cpn>
+        <!-- v-on不仅可以监听默认事件，也可以监听自定义事件 -->
+    </div>
+
+    <!-- 子组件模板 -->
+    <template id="cpn">
+        <div>
+            <button v-for="foo in categories" @click="btn(foo)">{{ foo.name }}</button>
+        </div>
+    </template>
+    <script src="../vue/vue.js"></script>
+    <script>
+        // 子组件
+        const cpn = {
+            template: '#cpn',
+            data() {
+                return {
+                    categories:[
+                        {id:'aaa',name:'hot'},
+                        {id:'bbb',name:'phone'},
+                        {id:'ccc',name:'computer'},
+                        {id:'ddd',name:'recommend'},
+                    ]
+                }
+            },
+            methods: {
+                btn(foo){
+                    // 发送事件, 这里最好也不使用驼峰
+                    // 自定义事件
+                    this.$emit('btn', foo)
+                }
+            },
+        }
+
+        // 父组件
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: "hello",
+            },
+            components: {
+                cpn
+            },
+            methods:{
+                cpn(foo){
+                    console.log(foo);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

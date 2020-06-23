@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <cpn></cpn>
+    </div>
+    <template id="cpn">
+        <div>
+            <h2>charslub's children</h2>
+            <c_cpn></c_cpn>
+        </div>
+    </template>
+    <template id="c_cpn">
+        <div>
+            <h2>charslub</h2>
+            <button @click="btnClick">typing</button>
+        </div>
+    </template>
+    <script src="../vue/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello'
+            },
+            components: {
+                cpn: {
+                    template: '#cpn',
+                    data() {
+                        return {
+                            name:'asdad'
+                        }
+                    },
+                    components:{
+                        c_cpn:{
+                            template:'#c_cpn',
+                            methods: {
+                                btnClick() {
+                                    // 其使用方法与refs相同 访问了父组件
+                                    console.log(this.$parent.name);
+                                    // 访问根组件中的属性
+                                    console.log(this.$root.message);
+                                }
+                            },
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

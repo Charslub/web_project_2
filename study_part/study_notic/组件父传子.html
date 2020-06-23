@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!--这里必须加上v-bind进行数据监听，否则会导致数据传递的失败，
+            movies、message会变成字符串而不是参数进行传递  -->
+        <cpn :cmovies="movies" :cmessage="message"></cpn>
+    </div>
+    <template id="cpn">
+        <div>
+            <p>{{cmovies}}</p>
+            <p>{{cmessage}}</p>
+        </div>
+    </template>
+    <script src="../vue/vue.js"></script>
+    <script>
+        const cpn = {
+            template: '#cpn',
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+
+            },
+            // props:['cmovies','cmessage'],
+            // 限制传递的数据的传递类型
+            props: {
+                // cmovies:Array,
+                // cmessage: String,
+                // 默认值
+                cmessage: {
+                    type: String,
+                    default: 'sada',
+                    required: true,
+                    // 必须传递参数设置，设置后不进行传值会发生报错
+                },
+                cmovies: {
+                    type: Array,
+                    default() {
+                        return [];
+                    }
+                },
+                // 自定义验证函数
+                check:{
+                    validator: function(value){
+                        // 必须是数组中的一种字符串
+                        return ['sad','as','www'].indexOf(value) !== -1
+                    }
+                }
+            }
+        }
+
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: "hello",
+                movies: ['dm', 'elsa', 'tmsk'],
+            },
+            components: {
+                cpn
+            }
+        })
+    </script>
+</body>
+
+</html>

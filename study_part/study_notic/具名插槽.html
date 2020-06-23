@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 若不加入name进行替换 则其会直接替换未命名的插槽 -->
+        <cpn><h2>hhh</h2></cpn>
+        <!-- 指明名字进行替换 -->
+        <cpn><span slot="center">tmsk</span></cpn>
+    </div>
+    <template id="cpn">
+        <div>
+            <!-- 取名name区分 -->
+            <slot name="left"><span>left</span></slot>
+            <slot name="center"><span>middle</span></slot>
+            <slot name="right"><span>right</span></slot>
+            <slot></slot>
+        </div>
+    </template>
+    <script src="../vue/vue.js"></script>
+    <script>
+        const cpn = {
+            template:'#cpn',
+        }
+        const app = new Vue({
+            el:'#app',
+            data:{
+                message:'hello'
+            },
+            components:{
+                cpn
+            }
+        })
+    </script>
+</body>
+</html>
