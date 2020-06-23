@@ -19,9 +19,17 @@
 // 配置路由相关信息
 import VueRouter from 'vue-router'
 import Vue from 'vue'
-import Home from '../components/Home.vue'
-import About from '../components/About.vue'
-import User from '../components/User.vue'
+// import Home from '../components/Home.vue'
+// import About from '../components/About.vue'
+// import User from '../components/User.vue'
+
+// 懒加载
+const Home = () => import('../components/Home.vue')
+const HomeNews = () => import('../components/HomeNews.vue')
+const HomeMessage = () => import('../components/HomeMessage.vue')
+const About = () => import('../components/About.vue')
+const User = () => import('../components/User.vue')
+const Profile = () => import('../components/Profile.vue')
 
 // 通过Vue.use(插件)， 安装插件
 Vue.use(VueRouter)
@@ -29,7 +37,19 @@ Vue.use(VueRouter)
 // 创建vuerouter对象
 const routes = [{
   path: '/home',
-  component: Home
+  component: Home,
+  children: [
+    {
+      path: '',
+      redirect: 'news'
+    },{
+      path: 'news',
+      component: HomeNews
+    },{
+      path: 'message',
+      component: HomeMessage
+    }
+  ]
 },{
   path: '/about',
   component: About
@@ -41,6 +61,9 @@ const routes = [{
   // url中包含参数时
   path: '/user/:userid',
   component: User
+},{
+  path: '/profile',
+  component: Profile
 }]
 
 const router = new VueRouter({

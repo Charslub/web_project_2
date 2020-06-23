@@ -6,6 +6,6 @@ const baseConfig = require('./base.config')
 module.exports = webpackMerge(baseConfig, {
     plugins:[
         // 调用丑化插件
-        new uglifyJsPlugin()
+        // new uglifyJsPlugin()
     ]
 })
