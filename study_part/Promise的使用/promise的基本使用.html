@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // setTimeout是一个异步的操作
+        setTimeout(() => {
+            console.log('hello world');
+        }, 1000)
+
+        // 异步操作则可以使用promise对其进行封装
+        // 参数 -> 函数(resolve, reject)
+        // resolve, reject本身又是函数
+        new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // 调用resolve其接下来则会调用then函数
+                resolve();
+            }, 1000)
+        }).then(() => {
+            // 当有多个异步操作嵌套时则使用then函数并在结束前new一个Promise对象
+            // 紧接着再继续剩下的异步,这样才能将多个异步操作链接在一起
+            // 即链式编程
+            console.log("asd");
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve()
+                }, 1000)
+            }).then(() => {
+                setTimeout(() => {
+                    console.log('chars');
+                }, 1000)
+            })
+        })
+
+        // 传递参数时
+        new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // 当含有参数时在调用resolve时也要将参数传入
+                // resolve是在请求成功时调用的
+                resolve("charslub")
+                // 失败时调用reject(拒绝)
+                reject('error message')
+            }, 1000)
+        }).then((data) => {
+            // 处理代码
+            console.log(data);
+        }).catch((err) => {
+            console.log(err);
+        })
+    </script>
+</body>
+
+</html>

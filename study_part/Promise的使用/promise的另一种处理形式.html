@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // promise的三种状态：
+                // pending等待状态，还未接收到网络请求或定时器为到达设定时间
+                // resolve调用时代表满足条件并处于fulfill满足状态会调用then
+                resolve('hello charslub')
+                // reject调用时代表拒绝onrejected处于reject拒绝状态会调用catch
+                reject('error')
+            }, 1000)
+        }).then(data => {
+            console.log(data);
+        }, error => {
+            console.log(error);
+        })
+    </script>
+</body>
+
+</html>

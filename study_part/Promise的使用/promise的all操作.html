@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 出现多个请求时需要多个请求都完成时才可以继续操作
+        // 但是请求顺序完成未知
+
+        let isResult_1 = false
+        let isResult_2 = false
+
+        // 请求一
+        $.ajax({
+            url: '',
+            success: function () {
+                console.log("result-1");
+                isResult_1 = true
+                handleResult()
+            }
+        })
+        // 请求二
+        $.ajax({
+            url: '',
+            success: function () {
+                console.log("result-2");
+                isResult_2 = true
+                handleResult()
+            }
+        })
+
+        function handleResult() {
+            if (isResult_1 && isResult_2) {
+
+            }
+        }
+
+        // Promise的all使用 传入的参数必须为可迭代对象
+        Promise.all([
+            new Promise((resolve, reject) => {
+                $.ajax({
+                    url: '',
+                    success: function (data) {
+                        resolve(data)
+                    }
+                })
+            }),
+            new Promise((resolve, reject) => {
+                $.ajax({
+                    url: '',
+                    success: function (result) {
+                        resolve(result)
+                    }
+                })
+            })
+            // results是一个数组包含了所有的请求的返回结果
+        ]).then((results) => {
+            console.log(results[0]);
+            console.log(results[1]);
+        })
+    </script>
+</body>
+</html>
